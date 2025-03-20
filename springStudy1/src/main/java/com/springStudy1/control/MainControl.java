@@ -2,6 +2,8 @@ package com.springStudy1.control;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainControl {
@@ -11,8 +13,33 @@ public class MainControl {
 		System.out.println(" 와  진짜 실행 된다....  한글 좋아...");
 		return "hello.html";
 	}
+	
+	@GetMapping("/signIn")
+	public String login() {
+		return "signIn.html";
+	}
+	
+	@GetMapping("/")
+	public String homePage() {
+		return "index.html";
+	}
+	
+	@GetMapping("/list")
+	public ModelAndView listPage(@RequestParam String type) {
+		System.out.println(type);
+		ModelAndView mav = new ModelAndView("list.html");
+		//mav.setViewName("");
+		
+		
+		
+		
+		return mav;
+	}
 }
 
+//  주소 :  http://localhost/signIn
+//  뷰 페이지 :  signIn.html  
+//        내용 : 아이디 , 비밀번호 입력 가능하게
 
 /*
  	 컨트롤 클래스의 역할 지정 - @Controller 를 클래스 위에 넣기 
