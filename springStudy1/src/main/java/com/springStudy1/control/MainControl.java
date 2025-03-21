@@ -5,11 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springStudy1.DTO.School;
+import com.springStudy1.DTO.User;
 import com.springStudy1.service.SchoolService;
+import com.springStudy1.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MainControl {
@@ -17,16 +23,54 @@ public class MainControl {
 	@Autowired
 	private SchoolService schoolService;
 	
+	@Autowired
+	private UserService userService;
+	
 	@GetMapping("/test") // localhost/test
 	public String testPage() {
 		System.out.println(" 와  진짜 실행 된다....  한글 좋아...");
 		return "hello.html";
 	}
 	
+	//로그인 화면
 	@GetMapping("/signIn")
 	public String login() {
-		return "signIn.html";
+		return "signIn";
 	}
+	@PostMapping("/signIn")
+	public String login(@RequestParam("id") String id, @RequestParam("pw") String pw,
+			HttpSession session) {
+		//  매개변수를 통해 session 객체 가져오기 
+		boolean isSuccess = userService.loginChk(id, pw);
+		if( isSuccess )
+			session.setAttribute("user", id);
+		
+		return "index";
+	}
+	
+	
+	// 회원가입 화면
+	@GetMapping("/signUp")
+	public String join() {
+		return "signUp";
+	}
+	@PostMapping("/signUp")
+	public String joinSave(@ModelAttribute User user) {
+		
+		System.out.println(user.getUserLike());
+		
+		userService.save(user);
+		
+		
+		return "index"; // 회원가입 저장하고 첫페이지 돌려 보내기
+	}
+	
+	// 정보수정 화면
+	@GetMapping("/userUpdate")
+	public String memberUpdate() {
+		return "memberModify";
+	}
+	
 	
 	@GetMapping("/")
 	public String homePage() {
