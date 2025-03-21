@@ -19,10 +19,12 @@ public class AppConfig {
 		ds.setUrl("jdbc:mysql://localhost:3306/jkr");
 		return ds;
 	}
+	
 	@Bean
 	public JdbcTemplate jdbc(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
 	}
+	
 }
 
 /*

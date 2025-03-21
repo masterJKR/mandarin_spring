@@ -1,12 +1,21 @@
 package com.springStudy1.control;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springStudy1.DTO.School;
+import com.springStudy1.service.SchoolService;
+
 @Controller
 public class MainControl {
+	
+	@Autowired
+	private SchoolService schoolService;
 	
 	@GetMapping("/test") // localhost/test
 	public String testPage() {
@@ -21,17 +30,20 @@ public class MainControl {
 	
 	@GetMapping("/")
 	public String homePage() {
-		return "index.html";
+		return "index";
 	}
 	
 	@GetMapping("/list")
 	public ModelAndView listPage(@RequestParam String type) {
 		System.out.println(type);
-		ModelAndView mav = new ModelAndView("list.html");
+		ModelAndView mav = new ModelAndView("list");
 		//mav.setViewName("");
 		
+		// 클라이언트가 요청한 유치원, 초등학교, 중학교, 고등학교 에 대해 조회 하기 위해
+		// service클래스 객체 에 넘겨주고  필요한 데이터를 받아서  뷰페이지와 함께 클라이언트에게전달
 		
-		
+		List<School> list = schoolService.typeSelect(type);
+		mav.addObject("list",list); // ModelAndView에 저장
 		
 		return mav;
 	}
