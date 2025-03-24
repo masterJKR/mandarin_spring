@@ -67,9 +67,25 @@ public class MainControl {
 	
 	// 정보수정 화면
 	@GetMapping("/userUpdate")
-	public String memberUpdate() {
-		return "memberModify";
+	public ModelAndView memberUpdate(HttpSession session) {
+		ModelAndView mav = new ModelAndView("memberModify");
+		
+		// 현재 로그인한 회원의 정보를 가져와서 페이지에 출력하기
+		String id = (String)session.getAttribute("user"); // 로그인한 아이디
+		User info = userService.userDetail( id ); //회원정보 조회가져오기
+		mav.addObject("info",info);// 회원정보 모델앤뷰에 저장해야 뷰에 출력
+		
+		return mav;
 	}
+	
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "index";
+	}
+	
+	
 	
 	
 	@GetMapping("/")

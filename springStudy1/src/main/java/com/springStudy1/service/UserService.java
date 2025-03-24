@@ -32,6 +32,13 @@ public class UserService {
 		return userDao.findByUserIdAndUserPw(id,pw);
 	}
 
+	public User userDetail(String id) {
+		
+		User info = userDao.findById(id);
+		
+		return info;
+	}
+
 }
 
 
