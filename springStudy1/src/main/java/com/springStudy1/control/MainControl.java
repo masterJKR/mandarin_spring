@@ -1,6 +1,7 @@
 package com.springStudy1.control;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,6 +77,17 @@ public class MainControl {
 		mav.addObject("info",info);// 회원정보 모델앤뷰에 저장해야 뷰에 출력
 		
 		return mav;
+	}
+	
+	@PostMapping("/userUpdate")
+	public String userUpdate(@RequestParam Map<String,  String> param ) {
+		//input 태그의 name이  key,  input태그에 작성한 내용이 value
+		// map에 각각 저장된다.
+		System.out.println( param.get("id"));
+		
+		userService.update( param );
+		
+		return "index";
 	}
 	
 	
