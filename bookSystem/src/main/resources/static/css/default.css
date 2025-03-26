@@ -5,6 +5,19 @@
 	padding:0;
 	box-sizing: border-box;
 }
+
+ul{
+	list-style-type:none;
+}
+a{
+	text-decoration:none;
+	color:inherit;
+}
+input{
+	outline: none;
+	padding:5px 10px;
+}
+
 #wrap{
 	width:1000px;
 	margin:0 auto;
@@ -13,11 +26,38 @@
 #header{
 	width:100%;
 	position:sticky;
+	padding:15px 0;
 }
 
 #menuList{
 	width:100%;
 	display:flex;
+	align-items:center;
+}
+#menuList .menu{
+	width:20%;
+	text-align:center;
+}
+#menuList .menu a{
+	display:block;
+	width:80%;  padding:10px 0;
+	margin:0 10%;
+}
+#menuList .menu a:hover{
+	background:#3cb371;
+	color:#eee;
+}
+#loginWrap{
+	margin:15px 0;
+	width:100%;
+}
+#loginWrap .login-box{
+	display:flex;
+}
+.login-area{
+	border:2px solid #6495ed70;
+	border-radius:7px;
+	padding:10px;
 }
 
 
