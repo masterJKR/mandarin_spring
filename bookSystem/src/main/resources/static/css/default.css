@@ -50,5 +50,48 @@ input{
 	color:#eee;
 }
 
+/* 로그인성공시 보여지는 유저 메뉴 영역 */
+#userBox{
+	position:fixed;
+	bottom:0;
+	left:-125px;
+	display:flex;
+	transition:left 1s ease-in-out;
+}
+#userMenu{
+	display:flex;
+	flex-direction: column;
+	text-align:center;
+	position:relative;
+	background:#1e1e1e;
+	width:125px;
+	color:#eee;
+}
+#userMenu a{
+	display:block;
+	width:100%;
+	padding:5px 10px;
+}
+#userMenu a:hover{
+	background:#eee;
+	color:#1e1e1e;
+}
+
+#userMenu .user-email{  word-break:break-all;}
+
+#menuToggle{
+	align-self:end;
+	color:#1e1e1e;
+	font-size:30px;
+	border-left:1px solid #fff;
+}
+#menuToggle .menuHide{
+	display:none;
+}
+
+
+
+
+
 
 

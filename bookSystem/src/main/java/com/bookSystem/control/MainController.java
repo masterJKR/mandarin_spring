@@ -13,6 +13,8 @@ import com.bookSystem.DTO.MemberDto;
 import com.bookSystem.Service.BookService;
 import com.bookSystem.Service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class MainController {
 	
@@ -33,7 +35,8 @@ public class MainController {
 	}
 	
 	@PostMapping("/signIn")
-	public String login( MemberDto memberDto , Model model ) {
+	public String login( MemberDto memberDto ,
+			HttpSession session ,Model model ) {
 		System.out.println( memberDto.getEmail() );
 		
 		// 로그인처리를 진행하려면 service 의 메서드를 호출한다. 
@@ -42,12 +45,21 @@ public class MainController {
 		// 그냥 service쪽 메서드를 호출하면 된다.
 		boolean isSuccess = memberService.signIn( memberDto );
 		
-		if(isSuccess) {
+		if(isSuccess) { // 로그인 성공시
+			session.setAttribute("user", memberDto.getEmail());
 			return "redirect:/";
 		}
 		// 로그인 실패시 index.html 다시 돌아가기  
-		model.addAttribute("fail", 1);
+		model.addAttribute("fail",1);
 		return "index";
+	}
+	
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("user");
+		return "redirect:/";
 	}
 	
 	
