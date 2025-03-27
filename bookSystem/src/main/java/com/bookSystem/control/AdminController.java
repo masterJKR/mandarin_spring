@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bookSystem.DTO.BookWriteDto;
 import com.bookSystem.Service.BookService;
 
 @Controller
@@ -18,8 +19,19 @@ public class AdminController {
 	@GetMapping("/bookEnroll")  // locahost/admin/bookEnroll 주소 매핑
 	public String enrollPage(Model model) {
 		
-		return "bookWrite";
+		model.addAttribute("bookWriteDto",  new BookWriteDto() );
+		
+		return "book/bookWrite";
 	}
+	
+	@GetMapping("/bookSave") // 도서 테이블에 저장 요청 
+	public String saveBook(BookWriteDto bookWriteDto) {
+		bookService.bookSave(bookWriteDto);
+		
+		return "redirect:/";
+	}
+	
+	
 }
 
 

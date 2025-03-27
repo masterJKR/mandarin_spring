@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.bookSystem.DTO.BookListDto;
+import com.bookSystem.DTO.BookSearchDto;
 import com.bookSystem.DTO.MemberDto;
 import com.bookSystem.Service.BookService;
 import com.bookSystem.Service.MemberService;
@@ -62,6 +64,26 @@ public class MainController {
 		return "redirect:/";
 	}
 	
+	// 도서 검색 부분 
+	@GetMapping("/bookSearch")
+	public String search(Model model) {  // 도서검색 페이지 요청
+		
+		model.addAttribute("bookSearchDto", new BookSearchDto() );
+		
+		return "book/search";
+	}
+	
+	@GetMapping("/bookSearch/result") // 검색어 입력하여 요청시
+	public String searchResult( BookSearchDto bookSearchDto , Model model) {
+		
+		List<BookListDto> bookListDtos=  bookService.bookSearch(bookSearchDto);
+		
+		model.addAttribute("bookListDtos", bookListDtos);
+		
+		return "book/search";
+	}
+	
+	//도서검색 부분 끝
 	
 	
 //	@GetMapping("/test")
