@@ -6,7 +6,18 @@
 <head>
 
 <th:block layout:fragment="css"></th:block>
-<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		window.onload=function(){
+			const input = document.getElementById("keyword");
+			input.addEventListener('keydown', function(event){
+				if( event.key==='Enter'){
+					alert("엔터키");
+				}
+			});
+		}
+	</script>
+</th:block>
 
 </head>
 
@@ -26,6 +37,31 @@
 				<input type="hidden" th:field="*{option}">
 			</form>
 		</div>
+		
+		<br><br><hr><br><br>
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th><th>제목</th><th>저자</th><th>출판사</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr th:each="row , stat : ${bookListDtos}">
+					<td th:text="${stat.count}"></td>
+					
+					<td >
+						<a th:href="${ session.user==null ? '' : '/basket?bookId='+ row.bookId  }"  
+						th:text="${row.bookTitle}"></a>
+					</td>
+					
+					<td th:text="${row.bookAuthor}"></td>
+					<td th:text="${row.bookPublishing}"></td>
+				</tr>				
+				
+			</tbody>
+			
+		</table>
 		
 	</div>
 </html>

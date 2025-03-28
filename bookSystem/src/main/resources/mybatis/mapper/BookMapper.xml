@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.bookSystem.Repository.BookRepository">
 
@@ -16,7 +14,7 @@
 	resultType="com.bookSystem.Entity.Book">
 		
 		select * from book
-		where
+		where 
 		 <choose>
 		 	<when test="option == 'title'">
 		 		book_title like concat('%', #{keyword}, '%')
@@ -28,6 +26,22 @@
 		 	</otherwise>
 		 </choose>
 		
+	</select>
+	
+	<insert id="basketSave" >
+		insert into mybasket(member_id , book_id )
+		values( #{mid}  , #{bid}  )
+	</insert>
+	
+	<select id="selectBasket" parameterType="int"
+	   resultType="com.bookSystem.Entity.MyBasket">
+		select * from mybasket where member_id=#{memberId}
+	
+	</select>
+	
+	<select id="findById" parameterType="int"  
+	resultType="com.bookSystem.Entity.Book">
+		select * from book where book_id=#{bookId}
 	</select>
 
 </mapper>

@@ -13,4 +13,15 @@
 		
 	</select>
 
+	<select id="findByEmail" parameterType="string"
+	 resultType="int">
+	 	select member_id from test_member 
+	 	where email=#{email}
+	 </select>
+
 </mapper>
+
+
+
+
+
