@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.bookSystem.DTO.BookBasketDto;
 import com.bookSystem.DTO.BookListDto;
+import com.bookSystem.DTO.BookLoanDto;
 import com.bookSystem.DTO.BookSearchDto;
 import com.bookSystem.DTO.BookWriteDto;
 import com.bookSystem.Entity.Book;
+import com.bookSystem.Entity.BookUse;
 import com.bookSystem.Entity.MyBasket;
 import com.bookSystem.Repository.BookRepository;
 import com.bookSystem.Repository.MemberRepository;
@@ -54,11 +56,14 @@ public class BookService {
 	// 클릭한 도서의 bookid 값 받아야되고 , 현재 로그인한 회원 id(번호) 가 필요
 	public void myBasketSave(int bookId, String email) {
 		
+		
+		
 		Map<String ,Integer> my = new HashMap<>();
 		my.put("mid", memberRepository.findByEmail(email) );
 		my.put("bid", bookId );
 		
 		bookRepository.basketSave( my );
+		
 	}
 	
 	// 대출 메뉴 페이지에 내장바구니 도서 목록 띄우기	
@@ -83,6 +88,41 @@ public class BookService {
 		}
 		
 		return bookBasketDtos;		
+		
+	}
+
+	public boolean loanSave(int id, int bookId, String email) {
+		boolean hasLoan = bookRepository.loanCheck(bookId);
+		if( hasLoan) return true;
+			bookRepository.deleteBasket(id);
+			
+			Map<String, Integer> info = new HashMap<>();
+			info.put("mid", memberRepository.findByEmail(email));
+			info.put("bid", bookId);
+			
+			bookRepository.loanInsert( info );
+		return false;
+	}
+
+	public List<BookLoanDto> myLoanList(String email) {
+		
+		List<BookLoanDto> list = new ArrayList<>();
+		
+		int memberId = memberRepository.findByEmail(email);
+		
+		List<BookUse> bookUses = bookRepository.findByMyLoan(memberId);
+		for(BookUse bookUse : bookUses) {
+			Book book = bookRepository.findById(bookUse.getBook_id());
+			BookLoanDto bookLoanDto = BookLoanDto.of(bookUse, book);
+			list.add(bookLoanDto);
+		}		
+		
+		return list;
+	}
+
+	public void returnEx(int id) {
+		
+		bookRepository.returnUpdate(id);
 		
 	}
 	

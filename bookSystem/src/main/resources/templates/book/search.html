@@ -24,7 +24,7 @@
 	<div layout:fragment="main"  id="main">
 		
 		<h1> 도서 검색 </h1>
-		
+		<b th:if="${fail}" > 대여중인 도서입니다.</b>
 		<div id="searchWrap">
 			<form id="searchFm" th:object="${bookSearchDto}" method="get" action="/bookSearch/result">
 				<div id="searchBox">

@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookSystem.DTO.BookBasketDto;
 import com.bookSystem.DTO.BookListDto;
+import com.bookSystem.DTO.BookLoanDto;
 import com.bookSystem.DTO.BookSearchDto;
 import com.bookSystem.DTO.MemberDto;
+import com.bookSystem.Repository.BookRepository;
 import com.bookSystem.Service.BookService;
 import com.bookSystem.Service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -93,7 +96,7 @@ public class MainController {
 	public String basket(@RequestParam int bookId, HttpSession session) {
 		
 		String email = (String)session.getAttribute("user");
-		bookService.myBasketSave(bookId, email);
+		 bookService.myBasketSave(bookId, email);
 		
 		return "redirect:/bookSearch";
 	}
@@ -112,6 +115,39 @@ public class MainController {
 	
 	
 	
+	@GetMapping("/loanSave")
+	public String loanSave(@RequestParam("id") int id, 
+			@RequestParam("bookId") int bookId, HttpSession session,Model model) {
+		String email = (String)session.getAttribute("user");
+		boolean hasLoan =bookService.loanSave(id,bookId, email);
+		if(hasLoan) {
+			List<BookBasketDto> basketList = bookService.myBasketList( email );
+			
+			model.addAttribute("basketList", basketList );
+			model.addAttribute("fail",1);	
+			return "book/loan";
+		}
+		return "redirect:/loans";
+	}
+	
+	@GetMapping("/return")
+	public String returnPage(Model model , HttpSession session) {
+		String email = (String)session.getAttribute("user");
+		
+		List<BookLoanDto> list = bookService.myLoanList( email );
+		
+		model.addAttribute("loanList",list);
+		return "book/bookReturn";
+	}
+	
+	
+	@GetMapping("/returnExecute")
+	public String returnExe(@RequestParam int id) {
+		
+		bookService.returnEx(id);
+		
+		return "redirect:/return";
+	}
 	
 	
 //	@GetMapping("/test")

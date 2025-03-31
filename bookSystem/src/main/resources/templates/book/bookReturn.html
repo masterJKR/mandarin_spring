@@ -11,24 +11,23 @@
 </head>
 
 	<div layout:fragment="main"  id="main">
-		<th:block th:if="${fail}">
-			<script>alert("대여중입 도서입니다.");</script>
-		</th:block>
-		<h1> 도서 대여 하기 </h1>
-		<h4> 대여 버튼을 클릭하세요</h4>
+		<h1> 도서 반납 하기 </h1>
+		<h4> 반납 버튼을 클릭하세요</h4>
 		
 		<br>
 		<table>
 			<tr>
 				<th>제목</th><th>저자</th> 
-				<th>대여</th>
+				<th>대여날짜</th>
+				<th>선택</th>
 			</tr>
 			
-			<tr th:each="row : ${basketList}">
+			<tr th:each="row : ${loanList}">
 				<td th:text="${row.book_title}"></td>
 				<td th:text="${row.book_author}"></td>
+				<td th:text="${row.loan_date}"></td>
 				<td style="width:120px; text-align:center;">
-					<a th:href="'/loanSave?id='+${row.id}+'&bookId='+${row.book_id}" >대여</a>
+					<a th:href="'/returnExecute?id='+${row.id}" >반납</a>
 				</td>
 			</tr>
 			
