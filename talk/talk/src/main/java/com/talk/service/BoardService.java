@@ -1,5 +1,6 @@
 package com.talk.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.talk.Dto.BoardDetailDto;
 import com.talk.Dto.BoardDto;
 import com.talk.Dto.BoardListDto;
+import com.talk.Entity.BoardEntity;
 import com.talk.Repository.BoardRepository;
 import com.talk.Repository.CommentRepository;
 
@@ -48,11 +50,33 @@ public class BoardService {
 	}
 	//최근글
 	public List<BoardListDto> boardRecent(){
-		return null;
+		
+		List<BoardEntity> boardEntities = boardRepository.findByOrderByWriteDateDesc();
+		
+		List<BoardListDto> boardListDtos = new ArrayList<>();
+		
+		for(BoardEntity board : boardEntities ) {
+			BoardListDto dto = BoardListDto.from(board);
+			
+			boardListDtos.add(dto);
+		}
+		
+		return boardListDtos;
 	}
 	//인기글
 	public List<BoardListDto> boardPopular(){
-		return null;
+		List<BoardEntity> boardEntities = boardRepository.findByOrderByHitDesc();
+		
+		List<BoardListDto> boardListDtos = new ArrayList<>();
+		
+		for(BoardEntity board : boardEntities ) {
+			BoardListDto dto = BoardListDto.from(board);
+			
+			boardListDtos.add(dto);
+		}
+		
+		return boardListDtos;
+		
 	}
 }
 
