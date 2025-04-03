@@ -16,6 +16,6 @@ public class BoardEntity {
 	private String content;
 	private String fileName;
 	private int hit;
-	private LocalDate writerDate;
+	private LocalDate writeDate;
 	
 }

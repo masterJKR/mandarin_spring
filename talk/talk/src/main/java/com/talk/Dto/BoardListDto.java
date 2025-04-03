@@ -23,7 +23,7 @@ public class BoardListDto {
 		boardListDto.setId(boardEntity.getId());
 		boardListDto.setTitle(boardEntity.getTitle());
 		boardListDto.setMemberId(boardEntity.getMemberId());
-		boardListDto.setWriteDate(boardEntity.getWriterDate());
+		boardListDto.setWriteDate(boardEntity.getWriteDate());
 		
 		return boardListDto;
 	}

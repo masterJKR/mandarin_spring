@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org">
-	<div th:fragment="signUp" id="joinModal">
+
+	<div th:fragment="signUp" id="joinModal" th:style="${open==1 ? 'display:block;' : ''}">
 	<div id="joinModalBg"></div>
         <div id="joinBox" class="box">
             <h2 class="text-light text-center mb15">TALK SIGNUP</h2>
