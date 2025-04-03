@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.talk.Dto.BoardDto;
@@ -13,6 +14,7 @@ import com.talk.service.BoardService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
 	
 	@Autowired
@@ -21,7 +23,8 @@ public class BoardController {
 	// 목록
 	@GetMapping("/index")
 	public String boardIndex(@RequestParam("page") int pageNum,	Model model) {
-		return null;
+		
+		return "board/boardList";
 	}
 	//글 페이지
 	@GetMapping("/write")

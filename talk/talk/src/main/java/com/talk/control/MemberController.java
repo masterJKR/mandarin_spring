@@ -13,6 +13,7 @@ import com.talk.Dto.MemberSignUpDto;
 import com.talk.service.BoardService;
 import com.talk.service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -40,12 +41,43 @@ public class MemberController {
 			return "index";
 		}
 		
-		System.out.println( memberSignUpDto.getName());
-		return null;
+		// 회원가입을 위해 입력한 값들이 올바른 값이라면  여기서부터 동작  위에 if는 올바르지 않은경우
+		memberService.memberSave(memberSignUpDto);
+		
+		return "redirect:/";
 	}
 	
 	@PostMapping("/signIn")
-	public String signIn(MemberSignInDto memberSignInDto, Model model) {
-		return null;
+	public String signIn(@Valid MemberSignInDto memberSignInDto, 
+			BindingResult bindingResult , HttpSession session, Model model) {
+		
+		boolean hasError = bindingResult.hasErrors();
+		if( !hasError ) {
+			hasError = memberService.memberLogin(memberSignInDto); //true면 틀렸다.
+			if(hasError)
+				bindingResult.reject("fail", "아이디 또는 비밀번호를 잘못 입력했습니다.");
+		}
+		
+		if( hasError ) {  //  로그인  아이디 또는 비밀번호 입력안하거나 길이 맞지않거나 영어 숫자 아닌경우
+			
+			//최근글 5개 가져오기
+			model.addAttribute("recentList", boardService.boardRecent() );
+			//인기글 5개 가져오기
+			model.addAttribute("popularList", boardService.boardPopular());
+		
+			model.addAttribute("memberSignUpDto" , new MemberSignUpDto() );
+			model.addAttribute("show",1);
+			return "index";
+		}
+		
+		// 여기서부터 실행되는 코드는 아이디 비밀번호가 잘입력되어서 로그인 성공이다.
+		session.setAttribute("user", memberSignInDto.getMemberId() );
+		
+		return "redirect:/";
+		
 	}
 }
+
+
+
+

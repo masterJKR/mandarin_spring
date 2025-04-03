@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class MemberEntity {
 	private int id;
-	private String memeberId;
+	private String memberId;
 	private String password;
 	private String name;
 	private String email;
@@ -19,7 +19,7 @@ public class MemberEntity {
 		MemberEntity memberEntity=new MemberEntity();
 		
 		memberEntity.setEmail(memberSignUpDto.getEmail());
-		memberEntity.setMemeberId(memberSignUpDto.getMemberId());
+		memberEntity.setMemberId(memberSignUpDto.getMemberId());
 		memberEntity.setName(memberSignUpDto.getName());
 		memberEntity.setPassword(memberSignUpDto.getPassword());
 		memberEntity.setTel(memberSignUpDto.getTel());
