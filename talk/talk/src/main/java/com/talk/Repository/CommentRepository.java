@@ -18,3 +18,8 @@ public interface CommentRepository {
 	//게시글 댓글 목록
 	public List<CommentEntity> findByBoardIdOrderIdDesc(int id);
 }
+
+
+
+
+

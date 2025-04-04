@@ -10,13 +10,13 @@ import lombok.Setter;
 public class BoardDto {
 	private int id;
 	private String title;
-	private String conetent;
+	private String content;
 	private String fileName;
 	
 	public static BoardEntity to(BoardDto boardDto) {
 		BoardEntity boardEntity = new BoardEntity();
 		
-		boardEntity.setContent(boardDto.getConetent());
+		boardEntity.setContent(boardDto.getContent());
 		boardEntity.setTitle(boardDto.getTitle());
 		boardEntity.setFileName(boardDto.getFileName());
 		
@@ -25,7 +25,7 @@ public class BoardDto {
 	
 	public static BoardDto from(BoardEntity boardEntity) {
 		BoardDto boardDto = new BoardDto();
-		boardDto.setConetent(boardEntity.getContent());
+		boardDto.setContent(boardEntity.getContent());
 		boardDto.setFileName(boardEntity.getFileName());
 		boardDto.setId(boardEntity.getId());
 		boardDto.setTitle(boardEntity.getTitle());
