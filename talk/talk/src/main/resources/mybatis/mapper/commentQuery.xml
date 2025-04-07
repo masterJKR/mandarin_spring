@@ -13,5 +13,15 @@
   	
   	</select>
   
+  	<insert id="insert" parameterType="CommentEntity">
+  		insert into comment( board_id , member_id, content, write_date )
+  		values( #{boardId} , #{memberId} , #{content}, now() )
+  	</insert>
+  
   
   </mapper>
+  
+  
+  
+  
+  
